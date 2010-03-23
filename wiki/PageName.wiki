@@ -38,6 +38,8 @@ Add this lines:
 
 in your Application Configuration
 
+You can set additionally 'salt'=>'example_salt' for yours passwords, and 'hashFunc' for valid callback to hashing algorithm of passwords (if not set extension will use md5 algorithm as hash function) if You'll change salt, or hashing function in future, Yours passwords will become useless
+
 4.) The Yii User Management Module needs a Database Connection to work. You now have to setup your SQlite or MySQL Database and insert the connection URI in your Application configuration, like this:
 
   'db'=>array(
