@@ -196,7 +196,7 @@ class UserController extends Controller
 	 * Change password
 	 */
 	public function actionChangepassword() {
-		$form = new UserChangePassword;
+		$form = new UserChangePassword('normalChange');
 		if (isset(Yii::app()->user->id)) 
 		{
 			if(isset($_POST['UserChangePassword'])) 
@@ -205,21 +205,30 @@ class UserController extends Controller
 				if($form->validate()) 
 				{
 					$new_password = User::model()->findByPk(Yii::app()->user->id);
-					$new_password->password = User::encrypt($form->password);
-					$new_password->activationKey = User::encrypt(microtime().$form->password);
-
-					if($new_password->save()) 
+					
+					if($new_password->password != User::encrypt($form->oldPassword))
 					{
-
-						Yii::app()->user->setFlash('profileMessage',
-								Yii::t("UserModule.user", "Your new password has been saved."));
-						$this->redirect(array("user/profile"));
+						$form->addError('oldPassword', Yii::t("UserModule.user", "You've enterd wrong old password."));
+						$form->oldPassword = $form->verifyPassword = $form->password = '';
 					}
 					else
 					{
-						Yii::app()->user->setFlash('profileMessage',
-								Yii::t("UserModule.user", "There was an error saving your password."));
-						$this->redirect(array("user/profile"));
+						$new_password->password = User::encrypt($form->password);
+						$new_password->activationKey = User::encrypt(microtime().$form->password);
+	
+						if($new_password->save()) 
+						{
+	
+							Yii::app()->user->setFlash('profileMessage',
+									Yii::t("UserModule.user", "Your new password has been saved."));
+							$this->redirect(array("user/profile"));
+						}
+						else
+						{
+							Yii::app()->user->setFlash('profileMessage',
+									Yii::t("UserModule.user", "There was an error saving your password."));
+							$this->redirect(array("user/profile"));
+						}
 					}
 				}
 			} 

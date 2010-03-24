@@ -11,6 +11,7 @@ New in 0.5:
 - fixed the way Models retrieve their tablename so it works even when not
 - in module context (steve, thyseus)
 - started to begin submodularized infrastructure. see docs/submodules.txt (thyseus)
+- password change when user is logged in should require old password check, otherwise user should use recovery functionality
 
 New in 0.4:
 

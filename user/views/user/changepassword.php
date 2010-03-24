@@ -23,6 +23,13 @@ $this->menu = array(
 
 	<p class="note"><?php echo Yii::t("UserModule.user", 'Fields with <span class="required">*</span> are required.'); ?></p>
 	<?php echo CHtml::errorSummary($form); ?>
+	<?php if($form->scenario == 'normalChange'): ?>
+	
+	<div class="row">
+	<?php echo CHtml::activeLabelEx($form,'oldPassword'); ?>
+	<?php echo CHtml::activePasswordField($form,'oldPassword'); ?>
+	</div>
+	<?php endif; ?>
 	
 	<div class="row">
 	<?php echo CHtml::activeLabelEx($form,'password'); ?>
