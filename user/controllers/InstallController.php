@@ -68,8 +68,16 @@ class InstallController extends Controller
 						`visible` int(1) NOT NULL default '0',
 						PRIMARY KEY  (`id`),
 						KEY `varname` (`varname`,`visible`)
-							) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ; ";
-
+							) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;";
+						
+					$db->createCommand($sql)->execute();
+						
+					$sql = "INSERT INTO `" . $profileFieldsTable . "` (`varname`, `title`, `field_type`, `field_size`, `field_size_min`, `required`, `position`, `visible`) VALUES
+						('lastname', 'Lastname', 'VARCHAR', '50', '2', '0', '0', '2'),
+						('firstname', 'Firstname', 'VARCHAR', '50', '2', '0', '0', '2'),
+						('about', 'About', 'TEXT', '0', '0', '0', '0', '2'),
+						('street', 'Street', 'VARCHAR', '255', '0', '0', '0', '2')";
+					
 					$db->createCommand($sql)->execute();
 
 
@@ -136,8 +144,8 @@ class InstallController extends Controller
 					if($this->module->installDemoData) 
 					{
 						$sql = "INSERT INTO `".$usersTable."` (`id`, `username`, `password`, `email`, `activationKey`, `createtime`, `lastvisit`, `superuser`, `status`) VALUES
-							(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'webmaster@example.com', '', 0, 1266571424, 1, 1),
-							(2, 'demo', 'fe01ce2a7fbac8fafaed7c982a04e229', 'demo@example.com', '', 0, 1266543330, 0, 1)";
+							(1, 'admin', '".User::encrypt('admin')."', 'webmaster@example.com', '', 0, 1266571424, 1, 1),
+							(2, 'demo', '".User::encrypt('demo')."', 'demo@example.com', '', 0, 1266543330, 0, 1)";
 						$db->createCommand($sql)->execute();
 						$sql = "INSERT INTO `".$profileTable."` (`profile_id`, `user_id`, `lastname`, `firstname`) VALUES
 							(1, 1, 'admin','admin'),
