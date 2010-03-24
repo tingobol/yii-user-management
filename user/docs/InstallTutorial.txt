@@ -38,6 +38,10 @@ Add this lines:
 						'messages',
 						),
 					'debug' => 'true',
+					// Uncomment and edit following line to use salt with Yours passwords (recommended)
+					// 'salt' => 'Yours_Unique_Salt';
+					// Uncomment and edit following line to use different callback function for passwords hashing (by default md5 algorithm will be used)
+					// 'hashFunc' => 'sha1'
 					)
 				),
 
