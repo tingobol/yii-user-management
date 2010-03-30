@@ -25,14 +25,22 @@ class UserModule extends CWebModule
 	public static $loginUrl = array("user/login");
 	public static $returnUrl = array("user/profile");		// Page to go to after registration, login etc.
 	public static $returnLogoutUrl = array("user/login");
-	
-	// LoginType :
-	const LOGIN_USERNAME		= 0; // 0: Allow login only by Username
-	const LOGIN_EMAIL			= 1; // 1: Allow login only by E-Mail
-	const	LOGIN_NAMEMAIL		= 2; // 2: Allow login by E-Mail or Username
-	//const LOGIN_OPENID		= 4; // 3: Allow login only by OpenID (will be implemented) 
-	public $loginType = self::LOGIN_NAMEMAIL;
 
+	// Activate profile History (profiles are kept always, and when the 
+  // user changes his profile, it gets added to the database rather than
+  // updated.
+	public $profileHistory = true;
+
+	// LoginType :
+	// 0: Allow login only by Username
+	const LOGIN_BY_USERNAME		= 0;
+	// 1: Allow login only by E-Mail (needs profile module)
+	const LOGIN_BY_EMAIL			= 1; 
+	// 2: Allow login by E-Mail or Username (needs profile module)
+	const	LOGIN_BY_NAME_EMAIL	= 2; 
+	// 3: Allow login only by OpenID (will be implemented) 
+	//const LOGIN_OPENID		= 4;
+	public $loginType = self::LOGIN_BY_USERNAME;
 
 	public function init()
 	{
