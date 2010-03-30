@@ -337,20 +337,28 @@ class UserController extends Controller
 	public function actionEdit()
 	{
 		$model=User::model()->findByPk(Yii::app()->user->id);
-		if(!$profile=$model->profile)
-			$profile = new Profile();
+		$profile = $model->profile;
 
 		if(isset($_POST['User']))
 		{
 			$model->attributes=$_POST['User'];
-			$profile->attributes=$_POST['Profile'];
+      if($this->module->profileHistory == true) 
+				$profile = new Profile();
 
-			if($model->validate()&&$profile->validate()) {
-				$model->save();
-				$profile->save();
-				Yii::app()->user->setFlash('profileMessage',Yii::t("user", "Changes are saved."));
-				$this->redirect(array('profile','id'=>$model->id));
+			if(isset($_POST['Profile']))  
+			{
+				$profile->attributes=$_POST['Profile'];
+				$profile->timestamp = time();
+				$profile->user_id = $model->id;
 			}
+
+				if($model->save() && $profile->save() ) 
+					Yii::app()->user->setFlash('profileMessage',
+							Yii::t("UserModule.user", "Your changes have been saved"));
+				else
+					Yii::app()->user->setFlash('profileMessage',
+							Yii::t("UserModule.user", "An error occured while saving your changes"));
+				$this->redirect(array('profile', 'id'=>$model->id));
 		}
 
 		$this->render('/user/profile-edit',array(
@@ -383,7 +391,8 @@ class UserController extends Controller
 		{
 			$model->attributes=$_POST['User'];
 
-			if(in_array('role', $this->controller->module->modules)) 
+
+			if($this->module->hasModule('role')) 
 			{
 				$model->roles = Relation::retrieveValues($_POST, 'Role');
 			}
@@ -424,7 +433,7 @@ class UserController extends Controller
 		{
 			$model->attributes = $_POST['User'];
 
-			if(in_array('role', $this->module->modules)) 
+			if($this->module->hasModule('role')) 
 			{
 				$model->roles = Relation::retrieveValues($_POST, 'Role');
 			}

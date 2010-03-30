@@ -2,9 +2,9 @@
 
 class User extends CActiveRecord
 {
-	const STATUS_NOTACTIVE=0;
-	const STATUS_ACTIVE=1;
-	const STATUS_BANNED=-1;
+	const STATUS_NOTACTIVE = 0;
+	const STATUS_ACTIVE = 1;
+	const STATUS_BANNED = -1;
 
 	public $username;
 	public $password;
@@ -17,7 +17,8 @@ class User extends CActiveRecord
 		return parent::model($className);
 	}
 
-	public function behaviors() {
+	public function behaviors() 
+	{
 		return array( 'CAdvancedArBehavior' => array(
 					'class' => 'application.modules.user.components.CAdvancedArBehavior'));
 	}
@@ -39,13 +40,11 @@ class User extends CActiveRecord
 		return array(
 			array('username', 'length', 'max'=>20, 'min' => 3,'message' => Yii::t("UserModule.user", "Incorrect username (length between 3 and 20 characters).")),
 			array('password', 'length', 'max'=>128, 'min' => 4, 'message' => Yii::t("UserModule.user", "Incorrect password (minimal length 4 symbols).")),
-			array('email', 'email'),
 			array('username', 'unique', 'message' => Yii::t("UserModule.user", "This user's name already exists.")),
-			array('email', 'unique', 'message' => Yii::t("UserModule.user", "This user's email adress already exists.")),
 			array('username', 'match', 'pattern' => '/^[A-Za-z0-9_]+$/u','message' => Yii::t("UserModule.user", "Incorrect symbol's. (A-z0-9)")),
 			array('status', 'in', 'range'=>array(0,1,-1)),
 			array('superuser', 'in', 'range'=>array(0,1)),
-			array('username, email, createtime, lastvisit, superuser, status', 'required'),
+			array('username, createtime, lastvisit, superuser, status', 'required'),
 			array('password', 'required', 'on'=>array('insert')),
 			array('createtime, lastvisit, superuser, status', 'numerical', 'integerOnly'=>true),
 		);
@@ -61,7 +60,7 @@ class User extends CActiveRecord
       $this->_userRoleTable = 'user_has_role';
 
 		return array(
-			'profile'=>array(self::HAS_ONE, 'Profile', 'user_id'),
+			'profile'=>array(self::HAS_ONE, 'Profile', 'user_id', 'order' => 'profile.profile_id DESC'),
 			'roles'=>array(self::MANY_MANY, 'Role', $this->_userRoleTable . '(user_id, role_id)'),
 			);
 	}
@@ -71,7 +70,7 @@ class User extends CActiveRecord
 		// Password equality is checked in Registration Form
 		$this->username = $username;
 		$this->password = $this->encrypt($password);
-		$this->email = $email;
+		$this->profile->email = $email;
 		$this->activationKey = $this->encrypt(microtime() . $password);
 		$this->createtime = time();
 		$this->superuser = 0;
@@ -101,7 +100,7 @@ class User extends CActiveRecord
 	 */
 	public function activate($email, $activationKey)
 	{
-		$find = User::model()->findByAttributes(array('email'=>$email));
+		$find = Profile::model()->findByAttributes(array('email'=>$email))->user;
 		if ($find->status) 
 		{
 			return true;
@@ -117,39 +116,12 @@ class User extends CActiveRecord
 			return false;
 	}
 
-	/**
-	* Checks if the user has the given Role)
-	* @mixed Role string or array of strings that should be checked
-	* @int (optional) id of the user that should be checked 
-	* @return bool Return value tells if the User has access or hasn't access.
-	*/
-	public static function hasRole($role, $uid = 0)
-	{
-		if($uid == 0)
-			$uid = Yii::app()->user->getId();
-
-		if(!is_array($role))
-			$role = array ($role);
-
-		$user = CActiveRecord::model('User')->findByPk($uid);
-		if(isset($user->roles)) 
-			foreach($user->roles as $roleobj) 
-			{
-				if(in_array($roleobj->title, $role) ||
-				  in_array($roleobj->id, $role))
-					return true;
-			}
-		return false;
-	}
-
-
 	public function attributeLabels()
 	{
 		return array(
 			'username'=>Yii::t("UserModule.user", "username"),
 			'password'=>Yii::t("UserModule.user", "password"),
 			'verifyPassword'=>Yii::t("UserModule.user", "Retype Password"),
-			'email'=>Yii::t("UserModule.user", "E-mail"),
 			'verifyCode'=>Yii::t("UserModule.user", "Verification Code"),
 			'id' => 'Id',
 			'activationKey' => Yii::t("UserModule.user", "activation key"),
