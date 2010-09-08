@@ -1,0 +1,79 @@
+<?php
+
+class YumSettings extends YumActiveRecord {
+
+    public static function model($className=__CLASS__) {
+        return parent::model($className);
+    }
+
+    public function tableName() {
+        if (isset(Yii::app()->controller->module->settingsTable))
+            $this->_tableName = Yii::app()->controller->module->settingsTable;
+        elseif (isset(Yii::app()->modules['user']['settingsTable']))
+            $this->_tableName = Yii::app()->modules['user']['settingsTable'];
+        else
+            $this->_tableName = '{{yumsettings}}'; // fallback if nothing is set
+ return Yum::resolveTableName($this->_tableName, $this->getDbConnection());
+    }
+
+    public function getActive() {
+        return YumSettings::model()->find('is_active')->id;
+    }
+
+    public function rules() {
+        return array(
+            array('title, loginType, messageSystem, mail_send_method', 'required'),
+            array('password_expiration_time, preserveProfiles, registrationType, enableRecovery, enableProfileHistory, readOnlyProfiles, enableCaptcha', 'numerical', 'integerOnly' => true),
+            array('title', 'length', 'max' => 255),
+            array('loginType', 'length', 'max' => 26),
+            array('id, title, preserveProfiles, registrationType, enableRecovery, enableProfileHistory, readOnlyProfiles, loginType, enableCaptcha', 'safe', 'on' => 'search'),
+        );
+    }
+
+    public function relations() {
+        return array(
+        );
+    }
+
+    public function attributeLabels() {
+        return array(
+            'id' => Yii::t('UserModule.user', 'ID'),
+            'title' => Yii::t('UserModule.user', 'Title'),
+            'preserveProfiles' => Yii::t('UserModule.user', 'Preserve Profiles'),
+            'registrationType' => Yii::t('UserModule.user', 'Registration type'),
+            'enableRecovery' => Yii::t('UserModule.user', 'Enable Recovery'),
+            'enableProfileHistory' => Yii::t('UserModule.user', 'Enable Profile History'),
+            'messageSystem' => Yii::t('UserModule.user', 'Messaging system'),
+            'readOnlyProfiles' => Yii::t('UserModule.user', 'Read Only Profiles'),
+            'loginType' => Yii::t('UserModule.user', 'Login Type'),
+            'enableCaptcha' => Yii::t('UserModule.user', 'Enable Captcha'),
+        );
+    }
+
+    public function search() {
+        $criteria = new CDbCriteria;
+
+        $criteria->compare('id', $this->id);
+
+        $criteria->compare('title', $this->title, true);
+
+        $criteria->compare('preserveProfiles', $this->preserveProfiles);
+
+        $criteria->compare('registrationType', $this->registrationType);
+
+        $criteria->compare('enableRecovery', $this->enableRecovery);
+
+        $criteria->compare('enableProfileHistory', $this->enableProfileHistory);
+
+        $criteria->compare('readOnlyProfiles', $this->readOnlyProfiles);
+
+        $criteria->compare('loginType', $this->loginType, true);
+
+        $criteria->compare('enableCaptcha', $this->enableCaptcha);
+
+        return new CActiveDataProvider(get_class($this), array(
+            'criteria' => $criteria,
+        ));
+    }
+
+}
