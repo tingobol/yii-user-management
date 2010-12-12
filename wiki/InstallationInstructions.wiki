@@ -1,7 +1,7 @@
 #summary Tutorial for installing and configuring the Yii User Management.
 #labels Featured,Phase-Deploy
 
-#sidebar TableOfContents
+#sidebar
 
 = Introduction =
 
