@@ -120,7 +120,7 @@ role. This is explained in the detailed Documentation. It is good to let this
 line occur as the first included Model, so you can extend the User-Model with 
 your own in your Application models/ Directory if you like.
 
-== Run WebInstall ==
+== Run Web Installer ==
 
 Run the User Management Installer in your Web-Browser:
 
