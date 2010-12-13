@@ -1,0 +1,41 @@
+#Configuration options for having Facebook Connect up and running.
+
+= Introduction =
+
+By now this article is a stub. It has the schema, skeleton of the final page. You either can wait for us to complete it or try to follow the schema. In any case we're sure it will work. Well, we hope.
+
+Below you will find the instructions to enable your Yum site to have *Facebook Connect* authentication using the Graph API.
+
+*WARNING:* This code is experimental. Although it works for us, it has not been heavily tested. However is fairly stable.
+
+= Steps to enable Facebook Connect Auth =
+
+== Get a fresh copy of Yum sources ==
+
+svn co, > r210.
+
+== Install and configure Yum ==
+
+See InstallationInstructions on how to create a new Yii application and install and enable Yum on it.
+
+
+
+== Yum enabled site configuration ==
+
+=== facebook_id ===
+
+Create a new 'facebook_id' INTEGER profile field.
+
+=== config/main.php configuration ===
+
+=== Enable Facebook Auth ===
+
+== Modify the main view layout ==
+
+=== PHP control code ===
+
+=== Facebook Javascript code ===
+
+=== The (infamous) Facebook Login button ===
+
+==== Alternative login method ====
