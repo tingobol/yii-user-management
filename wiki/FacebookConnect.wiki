@@ -26,11 +26,31 @@ See InstallationInstructions on how to create a new Yii application and install 
 
 Create a new 'facebook_id' INTEGER profile field.
 
-=== config/main.php configuration ===
+=== `config/main.php` configuration ===
+
+Has to be configured under the `user` module section.
+
+Here is an example:
+
+{{{
+'facebookConfig'=>array(
+	'appId'=>'YOUR APPID',
+	'secret'=>'YOUR SECRET',
+	'domain'=>'YOUR DOMAIN',
+	'status'=>true,
+	'xfbml'=>true,
+	'cookie'=>true,
+	'lang'=>'en_US', //es_LA, de_DE, cz_CZ, etc.
+),
+}}}
 
 === Enable Facebook Auth ===
 
+In the Yum Admin interface. More details to come.
+
 == Modify the main view layout ==
+
+You need to do some modifications to the layouts in your app:
 
 === PHP control code ===
 
@@ -106,3 +126,5 @@ In your views, where you want the button to be displayed. Check for the Facebook
 <?php endif; ?>
 }}}
 ==== Alternative login method ====
+
+Via `<a href=''></a>`. More details to come.
