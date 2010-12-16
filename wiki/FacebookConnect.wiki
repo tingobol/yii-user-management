@@ -63,7 +63,8 @@ $fbconfig = Yum::module()->facebookConfig;
 if ($fbconfig) {
     Yii::import('application.modules.user.vendors.facebook.*');
         require_once('Facebook.php');
-    $facebook = new Facebook(Yii::app()->modules['user']['modules']['facebookConfig']);
+    $fbconfig = Yii::app()->modules['user']['modules']['facebookConfig'];
+    $facebook = new Facebook($fbconfig);
     $fb_session = $facebook->getSession();
     if($fb_session && Yii::app()->user->isGuest)
                 if($this->action->id != 'login')
