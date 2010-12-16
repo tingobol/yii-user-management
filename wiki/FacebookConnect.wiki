@@ -58,22 +58,16 @@ Put this at the very begining of your _main layout_:
 
 {{{
 <?php
+
 $fbconfig = Yum::module()->facebookConfig;
 if ($fbconfig) {
     Yii::import('application.modules.user.vendors.facebook.*');
-	require_once('Facebook.php');
+        require_once('Facebook.php');
     $facebook = new Facebook($fbconfig);
     $fb_session = $facebook->getSession();
-    if($fb_session)
-	{
-		if(Yii::app()->user->isGuest)
-		{
-			if($this->createUrl($this->action->id) != '/user/auth/login')
-			{
-				$this->redirect($this->createUrl('/user/auth/login'));
-			}
-		}
-	}
+    if($fb_session && Yii::app()->user->isGuest)
+                if($this->action->id != 'login')
+                        $this->redirect($this->createUrl('/user/auth/login'));
 }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
