@@ -1,4 +1,5 @@
-#Configuration options for having Facebook Connect up and running.
+#labels Phase-Deploy
+Configuration options for having Facebook Connect up and running.
 
 = Introduction =
 
@@ -125,4 +126,16 @@ In your views, where you want the button to be displayed. Check for the Facebook
 }}}
 ==== Alternative login method ====
 
-Via `<a href=''></a>`. More details to come.
+As alternative to the above login fbmltag, you can use straigh PHP/HTML markup:
+{{{
+<a href="<?php echo $facebook->getLoginUrl(); ?>">
+<img style="margin-left: 10px; margin-top: 4px;"
+     src="<?php echo Yii::app()->baseUrl;?>>/images/signin/facebook.png" /> <!-- Google the image! -->
+</a>
+}}}
+
+= Conclusion =
+
+That's all. As said some paragraphs above, this is experimental code. We will be glad to have feedback from you, to help us to improve this documentation and the feature itself.
+
+Thank you for trying Yii User Management module.
