@@ -28,19 +28,23 @@ Create a new 'facebook_id' INTEGER profile field.
 
 === `config/main.php` configuration ===
 
-Has to be configured under the `user` module section.
+Has to be configured under the `user` key in Yii's modules section.
 
 Here is an example:
 
 {{{
-'facebookConfig'=>array(
-	'appId'=>'YOUR APPID',
-	'secret'=>'YOUR SECRET',
-	'domain'=>'YOUR DOMAIN',
-	'status'=>true,
-	'xfbml'=>true,
-	'cookie'=>true,
-	'lang'=>'en_US', //es_LA, de_DE, cz_CZ, etc.
+'user' => array(
+	'debug'=>true,
+	'facebookConfig'=>array(
+		'appId'=>'YOUR APPID',
+		'secret'=>'YOUR SECRET',
+		'domain'=>'YOUR DOMAIN',
+		'status'=>true,
+		'xfbml'=>true,
+		'cookie'=>true,
+		'lang'=>'en_US', //es_LA, de_DE, cz_CZ, etc.
+	),
+	'modules'=>array(...),
 ),
 }}}
 
@@ -63,7 +67,6 @@ $fbconfig = Yum::module()->facebookConfig;
 if ($fbconfig) {
     Yii::import('application.modules.user.vendors.facebook.*');
         require_once('Facebook.php');
-    $fbconfig = Yii::app()->modules['user']['modules']['facebookConfig'];
     $facebook = new Facebook($fbconfig);
     $fb_session = $facebook->getSession();
     if($fb_session && Yii::app()->user->isGuest)
