@@ -51,7 +51,8 @@ Here is an example:
 
 === Enable Facebook Auth ===
 
-In the Yum Admin interface. More details to come.
+In modules/user/usermodule.php
+set  $facebookConfig = true;
 
 == Modify the main view layout ==
 
@@ -59,13 +60,13 @@ You need to do some modifications to the layouts in your app:
 
 === PHP control code ===
 
-Put this at the very begining of your _main layout_:
+Put this at the very beginning of your _main layout_:
 
 {{{
 <?php
 
 $fbconfig = Yum::module()->facebookConfig;
-if ($fbconfig) {
+if isset(($fbconfig)) {
     Yii::import('application.modules.user.vendors.facebook.*');
         require_once('Facebook.php');
     $facebook = new Facebook($fbconfig);
@@ -84,7 +85,7 @@ if ($fbconfig) {
 Put this just after the `<body>` tag of your _main layout_:
 
 {{{
-<?php if ($fbconfig): ?>
+<?php if isset(($fbconfig)): ?>
 <div id="fb-root"></div>
 <script>
 window.fbAsyncInit = function() {
@@ -118,10 +119,12 @@ In your views, where you want the button to be displayed. Check for the Facebook
 {{{
 <?php if (!Yii::app()->user->isGuest): ?>
 <a href="<?php echo $this->createUrl('/user/auth/logout'); ?>" class="exit"><div></div>
-   <span>Salir</span>
+   <span>Logout</span>
 </a>
 <?php else: ?>
-<fb:login-button perms="email,user_birthday,read_stream,publish_stream"></fb:login-button>
+<fb:login-button perms="email,user_birthday,read_stream,publish_stream">
+<span>Login to Facebook</span>
+</fb:login-button>
 <?php endif; ?>
 }}}
 ==== Alternative login method ====
