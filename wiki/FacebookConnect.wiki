@@ -85,7 +85,7 @@ if(isset($fbconfig)) {
 Put this just after the `<body>` tag of your _main layout_:
 
 {{{
-<?php if isset(($fbconfig)): ?>
+<?php if(isset($fbconfig)): ?>
 <div id="fb-root"></div>
 <script>
 window.fbAsyncInit = function() {
