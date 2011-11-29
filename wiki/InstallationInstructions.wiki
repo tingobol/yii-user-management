@@ -56,7 +56,10 @@ Add these linesin your Application Configuration (protected/config/main.php):
 
 {{{
 'modules' => array(
-...
+
+		...
+		...
+
 		// Yii User Management - Possible Config
                 'avatar' => array(),
                 'friendship' => array(),
@@ -70,6 +73,8 @@ Add these linesin your Application Configuration (protected/config/main.php):
                         'debug' => true,
 		),
                 'usergroup' => array(),
+
+		...
 }}}
 
 The debug option is needed for the installation and will be set to false after the installation.
