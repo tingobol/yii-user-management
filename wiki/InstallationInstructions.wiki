@@ -56,10 +56,20 @@ Add these linesin your Application Configuration (protected/config/main.php):
 
 {{{
 'modules' => array(
-		'user' => array(
-			'debug' => true,
-			)
+...
+		// Yii User Management - Possible Config
+                'avatar' => array(),
+                'friendship' => array(),
+                'membership' => array(),
+                'messages' => array(),
+                'profile' => array(),
+                'registration' => array(),
+                'role' => array(),
+                'user' => array(
+                        // set to true to install, false afterwards
+                        'debug' => true,
 		),
+                'usergroup' => array(),
 }}}
 
 The debug option is needed for the installation and will be set to false after the installation.
