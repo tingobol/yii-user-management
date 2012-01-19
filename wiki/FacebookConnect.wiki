@@ -1,4 +1,3 @@
-#labels Phase-Deploy
 Configuration options for having Facebook Connect up and running.
 
 = Introduction =
@@ -51,8 +50,17 @@ Here is an example:
 
 === Enable Facebook Auth ===
 
-In modules/user/usermodule.php
-set  $facebookConfig = true;
+You need to set loginType to 8 into the `user` key in Yii's modules section:
+
+{{{
+'user' => array(
+	...
+	'loginType' => 8, //By username and Facebook should be 9.
+	...
+),
+}}}
+
+Check in UserModule.php:113 on how to activate one or more login ways.
 
 == Modify the main view layout ==
 
