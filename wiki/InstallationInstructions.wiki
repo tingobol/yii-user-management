@@ -173,16 +173,13 @@ tidy up a little bit:
 
 = Start using Yii User Management module =
 
-* Click on "Administrate your Users"
+  * Click on "Administrate your Users"
 Now you are taken to the default Front-End Login-Screen of the User 
 Management Module. Log in with the Username admin and Password admin.
 
-* Click on the 'update Icon' (the pencil) of your administrator User.
-Change the Password to something more safe than 'admin'. Click Save.
+  * Click on the 'update Icon' (the pencil) of your administrator User. Change the Password to something more safe than 'admin'. Click Save.
 
-* If you already didn't do it, remove the 'debug' => 'true' line from youri
-Application Configuration so your new data doesn't get overwritten accidentally
-by the installation process.
+  * If you already didn't do it, remove the 'debug' => 'true' line from your Application Configuration so your new data doesn't get overwritten accidentally by the installation process.
 
 = Configuration of your freshly installed User Management Module =
 
