@@ -155,7 +155,7 @@ your own in your Application models/ Directory if you like.
 
 == Set a caching component ==
 
-8.) Make sure to set a caching component. Yum relies on it. If you do not
+Make sure to set a caching component. Yum relies on it. If you do not
 want to cache, add
 
 {{{
