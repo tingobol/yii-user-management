@@ -1,7 +1,7 @@
 #summary Tutorial for installing and configuring the Yii User Management.
 #labels Featured,Phase-Deploy
 
-<wiki:toc max_depth="1" />
+<wiki:toc max_depth="2" />
 
 = Introduction =
 
@@ -261,7 +261,7 @@ Module and how to implement project-specific stuff. See the files in
 the docs/ directory for all this.
 
 
-= FAQ: =
+= FAQ =
 
 *Q:* I get the error Message: CWebUser does not have a method named "isAdmin":
 
