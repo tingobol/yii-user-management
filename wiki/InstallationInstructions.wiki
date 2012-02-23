@@ -77,6 +77,16 @@ $ wget http://www.yiiframework.com/extension/yii-user-management/files/User_Mana
 $ tar xvf User_Management_Module_0.8.tar.bz2
 }}}
 
+Alternatively, you can download the latest sources from SVN repository:
+
+{{{
+$ cd testdrive/protected
+$ mkdir modules
+$ cd modules
+$ svn checkout http://yii-user-management.googlecode.com/svn/trunk/ yii-user-management-read-only
+$ find . -type d -name '.SVN' -exec rm {} \; //Deletes all .SVN directories 
+}}}
+
 == Configure YUM to run the wizard ==
 
 The Yii-user-management module contains submodules that you just extracted
