@@ -82,7 +82,7 @@ Alternatively, you can download the latest sources from SVN repository:
 {{{
 $ cd testdrive/protected
 $ svn checkout http://yii-user-management.googlecode.com/svn/trunk/ yii-user-management-read-only modules
-$ find modules/ -type d -name '.SVN' -exec rm {} \; //Deletes all .SVN directories 
+$ find modules/ -type d -iname '.svn' -exec rm {} \; //Deletes all .SVN directories 
 }}}
 
 == Configure YUM to run the wizard ==
