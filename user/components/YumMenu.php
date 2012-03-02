@@ -8,11 +8,8 @@ class YumMenu extends CMenu {
 	public function init() {
 		parent::init();
 		$this->activateParents = true;
-		Yii::app()->clientScript->registerScript('menutoggle', "
-				$('.parent').click(function() { $(this).next().toggle(500);});
-				$('.parent').next().hide();
-				$('.active.parent').next().show();
-				");
+		Yii::app()->clientScript->registerScript('menutoggle', 
+				"$('.parent').click(function() { $(this).next().fadeToggle(250);});");
 	}
 
 	/**

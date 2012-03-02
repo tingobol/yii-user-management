@@ -24,6 +24,23 @@ abstract class YumActiveRecord extends CActiveRecord {
 		return $behaviors;
 	}	
 
+	public function limit($limit = 10)
+	{
+		$this->getDbCriteria()->mergeWith(array(
+					'limit' => $limit,
+					));
+		return $this;
+	}
+
+	public function order($order = 'id')
+	{
+		$this->getDbCriteria()->mergeWith(array(
+					'order' => $order,
+					));
+		return $this;
+	}
+
+
 	/**
 	 * @return CActiveRecordMetaData the meta for this AR class.
 	 */	
