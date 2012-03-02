@@ -24,7 +24,6 @@ class YumMessage extends YumActiveRecord
 		return parent::model($className);
 	}
 
-
 	public function beforeValidate() {
 		if(parent::beforeValidate()) {
 			$this->timestamp = time();

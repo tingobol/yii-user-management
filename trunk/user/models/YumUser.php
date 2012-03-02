@@ -651,13 +651,17 @@ class YumUser extends YumActiveRecord
 		return $hashFunc($string);
 	}
 
-	public function limit($limit = 10)
+	public function withRoles($roles)
 	{
-		$this->getDbCriteria()->mergeWith(array(
-					'limit' => $limit,
-					));
+		if(!is_array($roles))
+			$roles = array($roles);
+
+		$this->with('roles');
+		$this->getDbCriteria()->addInCondition('roles.id', $roles);
 		return $this;
 	}
+
+
 
 	public function scopes()
 	{
