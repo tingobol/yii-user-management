@@ -727,16 +727,20 @@ class YumUser extends YumActiveRecord
 	public function getAvatar($thumb = false)
 	{
 		if (Yum::hasModule('avatar') && $this->profile) {
+			$options = array();
+			if ($thumb)
+				$options = array('style' => 'width: 40px; height:40px;');
+			else
+				$options = array('style' => 'width: ' . Yum::module('avatar')->avatarDisplayWidth . 'px;');
+
 			$return = '<div class="avatar">';
 
 			if(Yum::module('avatar')->enableGravatar && $this->avatar == 'gravatar') 
-				return CHtml::image('http://www.gravatar.com/avatar/'. $this->getGravatarHash(), '');
-		
-			$options = array();
-			if ($thumb)
-				$options = array('style' => 'width: 50px; height:50px;');
-			else
-				$options = array('style' => 'width: ' . Yum::module('avatar')->avatarDisplayWidth . 'px;');
+				return CHtml::image(
+						'http://www.gravatar.com/avatar/'. $this->getGravatarHash(),
+						Yum::t('Avatar image'),
+						$options);
+
 
 			if (isset($this->avatar) && $this->avatar)
 				$return .= CHtml::image(Yii::app()->baseUrl . '/'
@@ -745,8 +749,8 @@ class YumUser extends YumActiveRecord
 				$return .= CHtml::image(Yii::app()->getAssetManager()->publish(
 							Yii::getPathOfAlias('YumAssets.images') . ($thumb
 								? '/no_avatar_available_thumb.jpg' : '/no_avatar_available.jpg'),
-							Yum::t('No image available'), array(
-								'title' => Yum::t('No image available'))));
+						Yum::t('No image available'),
+						$options));
 			$return .= '</div><!-- avatar -->';
 			return $return;
 		}
