@@ -40,7 +40,10 @@ class UserModule extends CWebModule {
 	public $password_expiration_time = 30; // days
 	public $activationPasswordSet = false;
 	public $autoLogin = false;
-	public $mailer = 'yum'; // set to swift to active emailing by swiftMailer or PHPMailer to use PHPMailer as emailing lib.
+
+	// set to swift to active emailing by swiftMailer or 
+	// PHPMailer to use PHPMailer as emailing lib.
+	public $mailer = 'yum'; 
 	public $phpmailer = null; // PHPMailer array options.
 
 	public $facebookConfig = false;
