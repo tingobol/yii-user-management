@@ -41,20 +41,6 @@ class YumMembership extends YumActiveRecord{
 
 
 	public function afterSave() {
-		if($this->isNewRecord 
-				&& Yum::module('membership')->confirmOrders
-				&& Yum::hasModule('messages')) {
-			Yii::import('application.modules.messages.models.YumMessage');
-			YumMessage::write($this->user, 1,
-					Yum::t('Order confirmed'),
-					YumTextSettings::getText('text_membership_ordered', array(
-							'{membership}' => $this->role->title,
-							'{payment}' => $this->payment->title,
-							'{order_date}' => date(Yum::module()->dateTimeFormat, $this->order_date),
-							'{id}' => $this->id,
-							)));
-		}
-
 		return parent::afterSave();
 	}
 
@@ -138,15 +124,13 @@ class YumMembership extends YumActiveRecord{
 	}
 
 	public function confirmPayment() {
-		$this->end_date = $this->payment_date + ($this->role->duration * 86400);
 		$this->payment_date = time();
+		$this->end_date = $this->payment_date + ($this->role->duration * 86400);
 
-		if($this->save(false)) {
-			$this->sendPaymentConfirmation();
-			return true;
+		if($this->save(false, array('payment_date', 'end_date'))) {
+			return $this->sendPaymentConfirmation();
 		} else
 		return false;
-
 	}
 
 	public function search()

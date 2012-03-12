@@ -6,7 +6,7 @@
  * the first parameter can either be an array containing the Information 
  * or a string containing the recipient, or a object instance of YumUser.
  * In the YumUser case, the email will be sent to the E-Mail field of the
- * most actual profile.
+ * profile.
  * @return true if sends mail, false otherwise
  */
 class YumMailer {
@@ -71,7 +71,7 @@ class YumMailer {
 			if($header == null) {
 				$header  = 'MIME-Version: 1.0' . "\r\n";
 				$header .= 'Content-type: text/html; charset=utf-8' . "\r\n";
-				$header .= 'From: ' . Yum::module('registration')->registrationEmail . "\r\n";
+				$header .= 'From: ' . Yum::module('message')->adminEmail . "\r\n";
 				$header .= 'To: ' . $to['to'] . "\r\n";
 			}
 			return mail($to['to'], $to['subject'], $to['body'], $header);

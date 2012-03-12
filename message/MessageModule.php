@@ -20,6 +20,9 @@ class MessageModule extends CWebModule
 	// Messaging System can be MSG_NONE, MSG_PLAIN or MSG_DIALOG
 	public $messageSystem = YumMessage::MSG_DIALOG;
 
+	// Emails send from the message system will have this email adress as From:
+	public $adminEmail = 'donotreply@example.com';
+
 	public $controllerMap = array(
 		'message' => array('class' => 'MessageModule.controllers.YumMessageController'),
 	);
