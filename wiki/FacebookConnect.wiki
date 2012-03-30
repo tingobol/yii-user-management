@@ -12,7 +12,7 @@ Below you will find the instructions to enable your Yum site to have *Facebook C
 
 == Get a fresh copy of Yum sources ==
 
-svn co, > r210.
+Please use a code revision major or equals to r210.
 
 == Install and configure Yum ==
 
