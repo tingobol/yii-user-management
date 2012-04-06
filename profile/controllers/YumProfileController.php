@@ -102,10 +102,10 @@ class YumProfileController extends YumController {
 
 		if(Yii::app()->request->isAjaxRequest)
 			$this->renderPartial($view, array(
-						'model' => $this->_model));
+						'model' => $this->_model), false, true);
 		else
 			$this->render($view, array(
-						'model' => $this->_model));
+						'model' => $this->_model), false, true);
 
 	}
 
