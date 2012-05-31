@@ -79,9 +79,9 @@ class YumUser extends YumActiveRecord
 	// last action when a user does something
 	public function setLastAction()
 	{
-		if (Yii::app()->user->isGuest) {
+		if (!Yii::app()->user->isGuest) {
 			$this->lastaction = time();
-			return $this->save();
+			return $this->save(false, array('lastaction'));
 		}
 	}
 
@@ -264,7 +264,7 @@ class YumUser extends YumActiveRecord
 		$rules[] = array('superuser', 'in', 'range' => array(0, 1));
 		$rules[] = array('username, createtime, lastvisit, lastpasswordchange, superuser, status', 'required');
 		$rules[] = array('notifyType, avatar', 'safe');
-		$rules[] = array('password', 'required', 'on' => array('insert'));
+		$rules[] = array('password', 'required', 'on' => array('insert', 'registration'));
 		$rules[] = array('createtime, lastvisit, lastaction, superuser, status', 'numerical', 'integerOnly' => true);
 
 		if (Yum::hasModule('avatar')) {
@@ -299,8 +299,9 @@ class YumUser extends YumActiveRecord
 		}
 
 		foreach ($roles as $role)
-			if ($role->id == $role_title || $role->title == $role_title)
-				return true;
+			if ((is_numeric($role) && $role == $role_title) 
+				|| ($role->id == $role_title || $role->title == $role_title))
+					return true;
 
 		return false;
 	}
@@ -729,9 +730,9 @@ class YumUser extends YumActiveRecord
 		if (Yum::hasModule('avatar') && $this->profile) {
 			$options = array();
 			if ($thumb)
-				$options = array('style' => 'width: 40px; height:40px;');
+				$options = array('class' => 'avatar', 'style' => 'width: 40px; height:40px;');
 			else
-				$options = array('style' => 'width: ' . Yum::module('avatar')->avatarDisplayWidth . 'px;');
+				$options = array('class' => 'avatar', 'style' => 'width: ' . Yum::module('avatar')->avatarDisplayWidth . ' px;');
 
 			$return = '<div class="avatar">';
 
@@ -740,7 +741,6 @@ class YumUser extends YumActiveRecord
 						'http://www.gravatar.com/avatar/'. $this->getGravatarHash(),
 						Yum::t('Avatar image'),
 						$options);
-
 
 			if (isset($this->avatar) && $this->avatar)
 				$return .= CHtml::image(Yii::app()->baseUrl . '/'

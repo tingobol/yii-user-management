@@ -1,5 +1,4 @@
 <?php
-
 class YumAuthController extends YumController {
 	public $defaultAction = 'login';
 	public $loginForm = null;
@@ -237,7 +236,7 @@ class YumAuthController extends YumController {
 	public function actionLogin() {
 		// If the user is already logged in send them to the return Url 
 		if (!Yii::app()->user->isGuest)
-			$this->redirect(Yum::module()->returnUrl);
+			$this->redirect(Yum::module()->returnUrl);   
 
 		$this->layout = Yum::module()->loginLayout;
 		$this->loginForm = new YumUserLogin('login');
