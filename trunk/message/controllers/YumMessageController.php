@@ -3,6 +3,7 @@
  * the Yii User Management Module. */
 
 Yii::import('application.modules.user.controllers.YumController');
+Yii::import('application.modules.message.models.YumMessage');
 
 class YumMessageController extends YumController {
 	public function accessRules() {
@@ -75,7 +76,7 @@ class YumMessageController extends YumController {
 								'{message}' => $model->title,
 								'{to}' => YumUser::model()->findByPk($model->to_user_id)->username
 								))); 
-				$this->redirect(array('index'));
+				$this->redirect(Yum::module('message')->inboxRoute);
 			}
 		}
 
@@ -97,14 +98,14 @@ class YumMessageController extends YumController {
 	public function actionDelete() {
 			$this->loadModel('YumMessage')->delete();
 			if(!isset($_POST['ajax']))
-				$this->redirect(array('index'));
+				$this->redirect(Yum::module('message')->inboxRoute);
 	}
 
 	public function actionIndex()
 	{
 		$model = new YumMessage;
 
-		$this->render('index',array(
+		$this->render(Yum::module('message')->inboxView, array(
 					'model'=> $model));
 	}
 

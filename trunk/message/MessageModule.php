@@ -14,6 +14,9 @@ class MessageModule extends CWebModule
 
 	public $layout = 'application.modules.user.views.layouts.yum';
 
+	public $inboxView = 'application.modules.message.views.message.index';
+	public $inboxRoute = array('index');
+
 	// Send a message to the user if the email changing has been succeeded
 	public $notifyEmailChange = true;
 

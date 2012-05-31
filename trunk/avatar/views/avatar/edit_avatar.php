@@ -37,7 +37,7 @@ if(Yum::module('avatar')->avatarMaxWidth != 0)
 	echo CHtml::Button(Yum::t('Remove Avatar'), array(
 				'submit' => array(
 					'avatar/removeAvatar')));
-	echo CHtml::submitButton(Yum::t('Upload Avatar'));
+	echo CHtml::submitButton(Yum::t('Upload avatar'));
 	echo CHtml::endForm();
 
 ?>

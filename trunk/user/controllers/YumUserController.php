@@ -92,7 +92,7 @@ class YumUserController extends YumController {
 
 	public function beforeAction($event) {
 		if(!Yii::app()->user instanceof YumWebUser)
-			throw new CException(Yum::t('Please make sure that Yii uses the YumWebUser component instead of CWebUser in your config/main.php components section. Most probably you forgot it. Please see the installation instructions.'));
+			throw new CException(Yum::t('Please make sure that Yii uses the YumWebUser component instead of CWebUser in your config/main.php components section. Please see the installation instructions.'));
 		if (Yii::app()->user->isAdmin())
 			$this->layout = Yum::module()->adminLayout;
 		else
